@@ -1,0 +1,23 @@
+/* header css */
+.logo{
+    float: left;
+    background-image:url("../images/logo.png");
+    background-repeat: no-repeat;
+    background-position-y: 21px;
+    height: 30px;
+    width:103px;
+    padding-top:21px;
+    
+}
+.navbar{
+    float: right;
+    color:#eaffff;
+
+}
+.menu{
+    text-decoration: none;
+    list-style: none;
+    float: left;
+    line-height: 80px;
+    
+}

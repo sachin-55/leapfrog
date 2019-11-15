@@ -1,0 +1,12 @@
+.whole-container{
+}
+.header-container{
+    overflow: auto;
+
+    background-image:url("../images/header-border.png");
+    background-position: bottom;
+    background-repeat: repeat-x;
+    background-color: #76c7c1;
+    
+
+}
