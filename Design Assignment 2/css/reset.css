@@ -3,7 +3,7 @@
     margin:0;
 }
 .wrapper-width{
-    width:73.125em;
+    width:1170px;
     margin:0 auto;
 }
 .font-Arial{
@@ -12,10 +12,7 @@
 a{
     text-decoration: none;
 }
-.paragraph-width{
-    width: 940px;
-    margin:0 auto;
-}
+
 .clear-fix{
     contain: "";
     clear: both;
@@ -24,4 +21,7 @@ a{
 
 .footer-container{
     color:#f6fbfa;
+}
+.body-container{
+    width: 100%;
 }
