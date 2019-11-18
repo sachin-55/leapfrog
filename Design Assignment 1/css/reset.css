@@ -1,28 +1,27 @@
 *{
-    margin:0;
     padding:0;
-    font-family: Arial, Helvetica, sans-serif;
-    
+    margin:0;
 }
-.header-wrapper{
-    margin-left:168px;
-    margin-right:173px;
+.wrapper-width{
+    width:73.125em;
+    margin:0 auto;
 }
-.body-wrapper{
-    margin-left:168px;
-    margin-right:173px;
-    overflow: auto;
+.font-Arial{
+    font-family: Arial;
 }
-.body-content-wrapper{
-    margin-left:168px;
-    margin-right:173px;
+a{
+    text-decoration: none;
 }
-.body-content-wrapper2{
-    overflow: auto;
-    padding-bottom: 72px;;
+.paragraph-width{
+    width: 940px;
+    margin:0 auto;
 }
-.footer-wrapper{
-    margin-left:168px;
-    margin-right:173px;
-    margin-top: 45px;
+.clear-fix{
+    contain: "";
+    clear: both;
+    display: table;
+}
+
+.footer-container{
+    color:#f6fbfa;
 }
