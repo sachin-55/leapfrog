@@ -95,8 +95,9 @@ nav.navbar ul li:hover{
 
 div.explore{
     text-align: center;
-    padding-bottom: 180px;
-    width: 883px;
+    padding-bottom: 180px;  
+    /* width: 883px; */
+    width: 77.4561%;
     margin:0 auto;
 
 }
@@ -106,6 +107,7 @@ div.our-customers{
     background-repeat: repeat-x;
     padding-top: 43px;
     padding-bottom: 31px;
+    min-width:71.25em ;
 }
 div.text{
     float: left;
@@ -126,7 +128,7 @@ div.text{
     color: #8191a6;
     line-height: 24px;
     padding-top: 19px;
-    width:355px;
+    width:22.1875em;
 
 }
 div.logo{
@@ -151,14 +153,15 @@ div.content-wrapper{
     margin:0 auto;
 }
 div.content-position{
-    width: 750px;
+    /* width: 750px; */
+    width:65.7894% ;
     float: right;
     padding-top: 60px;
 
 }
 
 div.our-services-fields .info-text  {
-    width: 615px;
+    width: 38.4375em;
 }
 .services-fields{
     margin-top: 115px;
@@ -166,13 +169,13 @@ div.our-services-fields .info-text  {
 }
 .service-container{
     float:left;
-    width: 335px;
+    width:20.9375em ;
     margin-bottom: 70px;
 }
 .build-things{
-    background-image: url("../images/man-with-bicycle.png"),url("../images/lower-slanted-image.png");
-    background-size: 594px 690px,cover;
-    background-position:right center ,center center;
+    background-image: url("../images/lower-slanted-image-withman.png");
+    background-size: cover;
+    background-position:center top; 
     background-repeat: no-repeat,no-repeat;
     min-width: 71.25em;
     background-attachment: scroll;
@@ -180,7 +183,8 @@ div.our-services-fields .info-text  {
 }
 
 div.build-content-wrapper{
-    width: 750px;
+    /* width: 750px; */
+    width: 65.7894%;
     margin: 0 auto;
 
 }
@@ -196,20 +200,21 @@ div.build-position{
 }
 
 .count-division{
-    width: 275px;
+    width: 17.1875em;
     float: left;
     margin-bottom:77px;
 }
 .contact-us{
     background-image: url("../images/lower-circle-imgs.png");
     background-repeat: no-repeat;
-    background-position:top;
+    background-position:-310px 50px;
     min-width: 71.25em;
     margin-bottom: 145px;
 }
 
 .contact-us-wrapper{
-    width:750px;
+    width:65.7894%; 
+    /* width:750px; */
     margin:0 auto;
 }
 footer{
