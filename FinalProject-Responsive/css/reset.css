@@ -4,12 +4,10 @@
 }
 
 .wrapper-width{
-    width:71.25em;
-    min-width:fit-content;
+    min-width:71.25em;
     margin:0 auto;
     
 }
-
 .clear-fix{
     content: "";
     clear: both;
