@@ -248,24 +248,41 @@ float: right;
     outline: none;
 
 }
-@media (max-width:769px){
+
+@media (max-width:768px){
     figure.logo a img{
         content:url("../images/logo.png");
         margin-left:40px;
+        margin-right:40px;
+
+    }
+    .top-holder{
+        margin-left:40px;
+        margin-right:40px;
+
     }
    
     .header-and-explore{
         width:80%;
         margin:0 auto;
     }
+
+    .our-customers{
+        margin-left:40px;
+        margin-right:40px;
+    }
+    footer{
+        margin-left:40px;
+        margin-right:40px;
+    }
     div.explore{
         text-align: center;
         padding-bottom: 180px;  
-        /* width: 883px; */
         width: 77.4561%;
         margin:0 auto;
     
     }
+ 
 }
 
-@media 
+

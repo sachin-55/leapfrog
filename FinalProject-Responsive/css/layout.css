@@ -12,7 +12,6 @@
 header.header{
     background-color: rgba(255, 255, 255, 0.94);
     box-shadow: 0 0 5px 5px rgba(182,182,182,0.24) ;
-    min-width:fit-content;
 }
 .top-holder{
     padding-top:13px;
@@ -97,8 +96,8 @@ div.explore{
     text-align: center;
     padding-bottom: 180px;  
     /* width: 883px; */
-    width: 77.4561%;
     margin:0 auto;
+    width: 886px;
 
 }
 div.our-customers{
@@ -107,10 +106,11 @@ div.our-customers{
     background-repeat: repeat-x;
     padding-top: 43px;
     padding-bottom: 31px;
-    min-width:71.25em ;
 }
 div.text{
     float: left;
+    width: 71.25%;
+
 
 }
 
