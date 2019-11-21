@@ -206,8 +206,9 @@ div.build-position{
 }
 .contact-us{
     background-image: url("../images/lower-circle-imgs.png");
+    background-size: cover;
     background-repeat: no-repeat;
-    background-position:-310px 50px;
+    background-position:-465px 35px;
     min-width: 71.25em;
     margin-bottom: 145px;
 }
