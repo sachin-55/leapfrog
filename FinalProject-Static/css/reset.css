@@ -3,8 +3,8 @@
     padding:0px;
 }
 
-.wrapper-width{
-    min-width:1140px;
+.main-wrapper{
+    width: 1140px;
     margin:0 auto;
     
 }

@@ -1,3 +1,7 @@
+/* -------------------header------------------------ */
+
+
+
 li.facebook a:hover img{
     content: url("../images/fb-hover.png");
 }
@@ -30,21 +34,81 @@ li.dribble a:hover img{
     color: #6b7c93;
 }
 
+
+
+.menu{
+    background-image: url("../images/1px-border-top.png");
+    background-position: top center;
+    background-repeat: repeat-x;
+    
+}
+.menu figure.logo{
+    float: left;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    height: 40px;
+}
+.figure.logo a{
+    display: block;
+}
+.menu nav.navbar{
+    float: right;
+   line-height: 68px;
+}
+
+nav.navbar ul{
+    list-style: none;
+   
+}
+nav.navbar ul li{
+    float: left;
+    padding-left: 14px;
+    padding-right: 6px;
+    font-size: 11px;
+   
+    margin-left: 30px;
+    border-top-color: transparent;
+    border-top-width: 2px;
+    border-top-style: solid;
+}
+nav.navbar ul li+li:last-child{
+    padding-right: 0px;
+}
+
+
+nav.navbar ul li a{
+    text-decoration: none;
+    font-family: "Roboto";
+    font-weight: 400;
+    color: #45505e;    display: block;
+   
+}
+
+
+nav.navbar ul li:hover{
+    border-top-color: #4caf50;
+    border-top-width: 2px;
+    border-top-style: solid;
+}
+
+.nav-wrapper{
+    display: none;
+}
+
+/* -----------------explore-------------------- */
+
 .explore  .title{
     font-size: 56px;
     color: #303842;
     line-height: 72px;
     padding-top: 296px;
-    width: 100%;
     font-family:"Roboto" ;
     font-weight: 300;
 
 }
 p.explore-text{
-    width: 670px;
     font-size: 18px;
     color: #6b7c93;
-    margin:0 auto;
     line-height: 26px;
     padding-top: 31px;
     padding-bottom:45px;
@@ -58,14 +122,48 @@ p.explore-text{
     font-size:14px;
     color: #4caf50;
 
+
 }
-div.our-services-fields .info-text h1{
+
+
+/* --------------customer---------------------- */
+
+div.text{
+    float: left;
+
+}
+
+.customers .text h1{
+    font-size : 24px;
+    font-family: "Roboto";
+    font-weight: 300;
+    color: #303842;
+    line-height: 24px;
+}
+.customers .text p{
+    font-size: 14px;
+    font-family: "Open Sans";
+    font-weight: 300;
+    color: #8191a6;
+    line-height: 24px;
+    padding-top: 19px;
+
+}
+figure.customer-logo{
+    float: right ;
+}
+.customer-logo img{
+    padding-left: 66px;
+}
+/* ---------------services----------------- */
+
+div.services .info-text h1{
     font-size: 24px;
     color: #303842;
 font-family: "Roboto";
 font-weight: 300;
 }
-div.our-services-fields .info-text p{
+div.services .info-text p{
 font-size: 14px;
 line-height: 24px;
 color: #8191a6;
@@ -84,11 +182,7 @@ font-weight: 300;
 }.service-container .service-image img{
     float: left;
 }
-.service-container .service-info{
-    float: left;
-    width: 241px;
-    padding-left: 30px;
-}
+
 div.service-container .service-info h1{
     font-size: 13px;
     font-family:"Open Sans";
@@ -104,10 +198,10 @@ div.service-container .service-info p{
     color: #8191a6;
 }
 .service-container:first-child{
-    margin-right: 70px;
+    margin-right: 48px;
 }
 .service-container:last-child{
-    margin-left: 70px;
+    margin-left: 48px;
 }
 div.service-container:hover .discovery img{
     content: url("../images/cicle-hover.png");
@@ -122,13 +216,19 @@ div.service-container:hover .sharing img{
     content: url("../images/correct-hover.png");
 }
 
-div.build-content-wrapper .info-text h1{
+
+
+
+
+/* ---------------------build-------------------------- */
+
+div.build-position .info-text h1{
     font-size: 24px;
     color: #303842;
 font-family: "Roboto";
 font-weight: 300;
 }
-div.build-content-wrapper .info-text p{
+div.build-position .info-text p{
 font-size: 14px;
 line-height: 24px;
 color: #8191a6;
@@ -159,13 +259,14 @@ div.counter-wrapper .count-title{
     font-family:"Open Sans" ;
     font-weight: 300;
     color:#303842 ;
-
-
 }
+
+
+
+/* ------------------contact---us--------------------- */
 
 .contact-us-wrapper h1{
     text-align: center;
-
     font-family:"Roboto";
     font-weight: 300;
     font-size: 34px;
@@ -175,9 +276,6 @@ div.counter-wrapper .count-title{
 }
 .contact-us-wrapper p{
     text-align: center;
-
-    width:530px;
-    margin: 0 auto;
     font-family:"Roboto";
     font-weight: 300;
     font-size: 14px;
@@ -185,13 +283,7 @@ div.counter-wrapper .count-title{
     color: #8191a6;
     margin-bottom: 100px;
 }
-.contact-us-form{
 
-    padding:90px 75px 60px 75px;
-    box-shadow: 0 0 28px 0 rgba(183,183,183,0.45);
-    background-color: #fff;
-    border-radius:10px ;
-}
 
 .contact-us-form label{
     display:block;
@@ -202,8 +294,18 @@ div.counter-wrapper .count-title{
     font-weight: 600;
 
 }
-.contact-form input{
-    width:100%;
+.contact-form input[type=email]{
+    width:588px;
+
+    padding:15px;
+    border: 1px solid transparent;
+    background-color: #f5f5f5;
+    margin-bottom: 33px;
+    outline: none;
+    border-radius: 5px;
+}
+.contact-form input[type=text]{
+    width:268px;
     padding:15px;
     border: 1px solid transparent;
     background-color: #f5f5f5;
@@ -212,12 +314,11 @@ div.counter-wrapper .count-title{
     border-radius: 5px;
 }
 
-.contact-form .name,[type=text]{
-    width: 46%;
+.contact-form .name{
     float: left;
 }
-.contact-form .name+.name{
-float: right;
+.contact-form .lname{
+    float: right;
 }
 
 .contact-form input[type=submit]{
@@ -238,8 +339,8 @@ float: right;
 
 }
 .contact-form textarea {
-    width:100%;
-    height: 178px;
+    width:588px;
+    height: 148px;
     padding:15px;
     border: 1px solid transparent;
     background-color: #f5f5f5;
@@ -249,40 +350,99 @@ float: right;
 
 }
 
-@media (max-width:768px){
-    figure.logo a img{
-        content:url("../images/logo.png");
-        margin-left:40px;
-        margin-right:40px;
 
-    }
-    .top-holder{
-        margin-left:40px;
-        margin-right:40px;
 
-    }
-   
-    .header-and-explore{
-        width:80%;
-        margin:0 auto;
-    }
+/* ------------------footer---------------------------- */
 
-    .our-customers{
-        margin-left:40px;
-        margin-right:40px;
-    }
-    footer{
-        margin-left:40px;
-        margin-right:40px;
-    }
-    div.explore{
-        text-align: center;
-        padding-bottom: 180px;  
-        width: 77.4561%;
-        margin:0 auto;
-    
-    }
- 
+
+.firefly-info .footer-logo{
+    padding-bottom: 30px;
+}
+.firefly-info p{
+    font-family:"Roboto" ;
+    font-weight:300 ;
+    font-size: 14px;
+    color: #8191a6;
+    line-height:24px;
+    padding-bottom: 30px;
+    padding-right: 20px;
+}
+.firefly-info span{
+    font-family:"Roboto" ;
+    font-weight:400 ;
+    font-size: 12px;
+    color: #303842;
+}
+.firefly-info a+a{
+    margin-left: 36px;
+}
+.copyright{
+    font-family:"Roboto" ;
+    font-weight:400 ;
+    font-size: 14px;
+    color: #8191a6;
+    padding-top:24px;
+
+}
+.categories-community ul{
+    list-style: none;
 }
 
+.categories h2{
+    padding-left: 60px;
+    font-family: "Roboto";
+    font-weight: 400;
+    font-size: 14px;
+    color:#303842 ;
+    line-height: 59px;
+}
+.categories li a{
+    padding-left: 60px;
+    font-family: "Roboto";
+    font-weight: 400;
+    font-size: 14px;
+    color:#919fb1 ;
+    line-height: 34px;
+}
+.categories li a:hover{
+   color: #303842;
+}
 
+.community h2{
+    padding-left: 60px;
+    font-family: "Roboto";
+    font-weight: 400;
+    font-size: 14px;
+    color:#303842 ;
+    line-height: 59px;
+}
+.community li a{
+    padding-left: 60px;
+    font-family: "Roboto";
+    font-weight: 400;
+    font-size: 14px;
+    color:#919fb1 ;
+    line-height: 34px;
+}
+.community li a:hover{
+   color: #303842;
+}
+.follow-us .follow{
+    font-family: "Roboto";
+   font-weight: 400;
+    font-size: 14px;
+    color:#303842 ;
+    line-height: 59px;
+    margin-left: 60px;
+}
+
+.follow-us ul{
+    list-style: none;
+}
+.follow-us li{
+    float: left;
+    margin-left: 60px;
+}
+.follow-us li+li{
+    margin-left: 20px;
+}
