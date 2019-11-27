@@ -74,7 +74,7 @@ function prev(){
    
 }
 
-//  setInterval(next,3000);
+ setInterval(next,3000);
 
 document.getElementById('next').addEventListener('click',next);
 
