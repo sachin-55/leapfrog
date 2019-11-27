@@ -41,6 +41,8 @@ counter=image.value;
 
 function next(){
 
+    ++counter;
+
     images.forEach(function(image,index) {
         image.style.left=(index-counter)*image.width+'px';  
         image.style.transition='all 1s ease';
@@ -48,16 +50,16 @@ function next(){
 
        imagePosition();   
 
-
-    counter++;
     
-    if(counter>images.length-1){
-        counter=0;
+    if(counter>images.length-2){
+        counter=-1;
     }
 
 }
 
 function prev(){
+    --counter;
+
     images.forEach(function(image,index) {
         image.style.left=(index-counter)*image.width+'px';    
         image.style.transition='all 1s ease';
@@ -65,16 +67,14 @@ function prev(){
 
         imagePosition();   
 
-
-    counter--;
-
-    if(counter<0){
-        counter=images.length-1; 
+ 
+    if(counter<=0){
+        counter=images.length; 
     }
    
 }
 
- setInterval(next,2000);
+//  setInterval(next,3000);
 
 document.getElementById('next').addEventListener('click',next);
 

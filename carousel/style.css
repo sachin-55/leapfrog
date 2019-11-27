@@ -39,6 +39,7 @@ ul.image-position li{
     cursor: pointer;
 }
 .btn.previous{
+    left: 0px;
     top:200px;
 }
 .btn.next{
