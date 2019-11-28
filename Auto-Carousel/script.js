@@ -81,14 +81,14 @@ counter=currentIndex;
     imagePosition();   
 }
 function transitionBack(index){
-    var speed=counter*900;
+    var speed=counter*that.containerWidth;
     
   var slide=setInterval(function(){
         wrapper.style.marginLeft=-(speed)+'px';
         speed-=10;
   
         
-        if(speed==((index-1)*900)){
+        if(speed==((index-1)*that.containerWidth)){
             
             setTimeout(function(){
                 clearInterval(slide);
@@ -97,13 +97,13 @@ function transitionBack(index){
     },0);
 }
 function transitionFront(index){
-    var speed=(counter)*900;
+    var speed=(counter)*that.containerWidth;
   var slide=setInterval(function(){
         wrapper.style.marginLeft=-(speed)+'px';
         speed+=10;
      
         
-        if(speed==((index+1)*900)){
+        if(speed==((index+1)*that.containerWidth)){
             setTimeout(function(){
                 clearInterval(slide);
             },0);
@@ -166,14 +166,14 @@ function imagePosition(){
         });
 }
 function transitionBack(index){
-    var speed=counter*900;
+    var speed=counter*that.containerWidth;
     
   var slide=setInterval(function(){
         wrapper.style.marginLeft=-(speed)+'px';
         speed-=that.slideSpeed;
   
         
-        if(speed==((index-1)*900)){
+        if(speed==((index-1)*that.containerWidth)){
             
             setTimeout(function(){
                 clearInterval(slide);
@@ -182,13 +182,13 @@ function transitionBack(index){
     },0);
 }
 function transitionFront(index){
-    var speed=(counter)*900;
+    var speed=(counter)*that.containerWidth;
   var slide=setInterval(function(){
         wrapper.style.marginLeft=-(speed)+'px';
         speed+=that.slideSpeed;
      
         
-        if(speed==((index+1)*900)){
+        if(speed==((index+1)*that.containerWidth)){
             setTimeout(function(){
                 clearInterval(slide);
             },0);
@@ -252,8 +252,8 @@ carouselOne.slider();
 carouselOne.autoSlider();
 
 
-var numberOfImages2=8;
-var widthOfEachImage2=900;
+var numberOfImages2=8;  
+var widthOfEachImage2=800;
 var wrapperWidth2=numberOfImages2*widthOfEachImage2;
 
 var slideSpeed2=20        //unit 

@@ -28,7 +28,7 @@
 ul.image-position{
     list-style: none;
     position:absolute;
-    top: 480px;
+    bottom: 80px;
     transform: translateX(100%);
 }
 ul.image-position li{
@@ -51,7 +51,7 @@ ul.image-position li{
     left: 0px;
 }
 .btn.next{
-    left: 858px;
+    right:0px;
 }
 i.fa{
     font-size:48px;
