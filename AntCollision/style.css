@@ -1,0 +1,30 @@
+*{
+    margin:0;
+    padding:0;
+}
+
+ .box-container {
+    height: 1000px;
+    width: 1000px;
+    background: #f7f4f4;
+    position: relative;
+    margin: 0 auto;
+    margin-top: 20px;
+    border: 1px solid black;
+}
+ .box-container2 {
+    height: 500px;
+    width: 500px;
+    background: #fdfbfb;
+    position: relative;
+    margin: 0 auto;
+    margin-top: 20px;
+
+}
+    
+.box {
+    background-image:url("https://www.animatedimages.org/data/media/183/animated-ant-image-0071.gif");
+    position: absolute;
+    background-position: center center;
+    background-size: 100% 100%;
+}
