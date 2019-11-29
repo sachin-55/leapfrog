@@ -28,6 +28,11 @@
                 that.state = 'dead';
                 that.element.style.backgroundImage = "url('https://www.animatedimages.org/data/media/183/animated-ant-image-0054.gif')";
 
+                setTimeout(function(){
+                    that.parentElement.removeChild(that.element);
+                    
+                },1000);
+
             }
 
             return this;
@@ -141,7 +146,7 @@
 
                     boxes[i].checkCollision(boxes);
                 }else{
-                    
+                    boxes.splice(i,1);
                 }
 
             }
