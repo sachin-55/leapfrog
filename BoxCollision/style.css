@@ -1,0 +1,27 @@
+*{
+    margin:0;
+    padding:0;
+}
+
+ .box-container {
+    height: 1000px;
+    width: 1000px;
+    background: #dfdfdf;
+    position: relative;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+ .box-container2 {
+    height: 500px;
+    width: 500px;
+    background: #635454;
+    position: relative;
+    margin: 0 auto;
+    margin-top: 20px;
+
+}
+    
+.box {
+    background: red;
+    position: absolute;
+}
