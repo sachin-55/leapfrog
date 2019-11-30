@@ -17,7 +17,7 @@
 
 }
 .road{
-    background-image: url("lane.png");
+    background-image: url("images/lane.png");
     background-repeat: repeat-y;
     background-size: cover;
     height:1000px;
@@ -26,7 +26,7 @@
 
 }
 .car{
-    background-image: url('run.png');
+    background-image: url('images/run.png');
      background-repeat:no-repeat;
     background-size: contain ;
     background-position: center;

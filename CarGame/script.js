@@ -76,14 +76,14 @@
         var randomNumber = Math.floor(Math.random() * (3) + 1);
 
         if (randomNumber === 1) {
-            return 'url("car2.png")';
+            return 'url("images/car2.png")';
         }
         else if (randomNumber === 2) {
-            return 'url("car3.png")';
+            return 'url("images/car3.png")';
 
 
         } else {
-            return 'url("car4.png")';
+            return 'url("images/car4.png")';
         }
     }
 
