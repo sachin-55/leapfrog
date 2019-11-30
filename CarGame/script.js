@@ -152,15 +152,15 @@
 
 
 
-            // setInterval(function () {
-            //     that.playGame(player);
-            // }, 60);
+            setInterval(function () {
+                that.playGame(player);
+            }, 60);
         }
 
         this.playGame = function (player) {
             player.moveCar();
             this.parentElement.style.backgroundPositionY = pos + 'px';
-            pos+=speed; 
+            pos += speed;
 
             console.log(pos);
 
