@@ -52,7 +52,7 @@
 .score-board {
     width: 20%;
     float:right;
-    background-image: url('black.jpg');
+    background-image: url('images/black.jpg');
       background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
