@@ -9,7 +9,7 @@ body{
     background-repeat:no-repeat;
 }
 .game-container{
-    width:70em;
+    width:50em;
     margin: 0 auto;
     content: "";
     clear: both;
@@ -24,8 +24,9 @@ body{
 .road{
     background-image: url("images/lane.png");
     background-repeat: repeat-y;
+
     background-size: cover;
-    height:1030px;
+    height:700px;
     position: relative;
     
 
@@ -45,13 +46,6 @@ body{
     background-position: center;
 
 }
-
-
-
-
-
-
-
 
 
 .score-board {
