@@ -1,6 +1,7 @@
 (function () {
 
     var SPEED = 20;
+    var refreshRate = 60;
     function PlayerCar(height, width, parentElement) {
         this.height = height;
         this.width = width;
@@ -155,8 +156,6 @@
 
                 obstacles[obstacleCount++] = new Obstacle(heightObs, widthObs, parentElement, lane.second).drawObstacle();
                 obstacles[obstacleCount++] = new Obstacle(heightObs, widthObs, parentElement, lane.third).drawObstacle();
-                obstacles[obstacleCount++] = new Obstacle(heightObs, widthObs, parentElement, lane.second).drawObstacle();
-
             }
 
         }
@@ -165,7 +164,7 @@
 
 
             for (var i = 0; i < obstacles.length; i++) {
-                if (parseInt(player.element.style.bottom.replace("px", "").trim()) < parseInt(obstacles[i].element.style.top.replace("px", "").trim()) - 580
+                if (parseInt(player.element.style.bottom.replace("px", "").trim()) < parseInt(obstacles[i].element.style.top.replace("px", "").trim()) - 600
                     && ((obstacles[i].element.style.left === '410px' && player.element.style.left === '410px')
                         || (obstacles[i].element.style.left === '110px' && player.element.style.left === '110px')
                         || (obstacles[i].element.style.left === '710px' && player.element.style.left === '710px'))) {
@@ -181,11 +180,27 @@
 
 
             play = setInterval(function () {
+                document.getElementById('high-score').innerHTML = localStorage.getItem('highscore');
+                if (localStorage.getItem('highscore') !== null) {
+                    if (localStorage.getItem('highscore') < score) {
+                        localStorage.setItem('highscore', score);
+                    }
+                } else {
+                    localStorage.setItem('highscore', score);
+                }
 
-                if ((totalDistance % 1000) === 0 && obstacles.length <= 6) {
+                if (totalDistance === 1080 && obstacles.length <= 6) {
                     that.generateObstacles();
                     document.getElementById("your-score").innerHTML = score;
-                    score += 10;
+                    score += 1;
+
+                    if (score % 10 === 0) {
+                        refreshRate +=5;
+                        if (refreshRate > 30) {
+                            refreshRate = 30;
+                        }
+                    }
+                    totalDistance = 0;
 
                 }
 
@@ -194,7 +209,7 @@
 
 
 
-            }, 60);
+            }, refreshRate);
         }
 
         this.playGame = function (player) {
@@ -207,10 +222,11 @@
                 obstacles[i].updateObstacle();
                 this.collisionDetection(player);
                 if (parseInt(obstacles[i].element.style.top.replace('px', '').trim()) >= 920) {
+
                     obstacles[i].destroyObstacle();
                     obstacles.splice(i, 1);
                     obstacleCount--;
-                  
+
                 }
 
 

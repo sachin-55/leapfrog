@@ -1,9 +1,14 @@
 *{
     margin:0;
     padding:0;
+ 
+}
+body{
+    background-image: url("images/desert.png");
+    background-size: cover;
+    background-repeat:no-repeat;
 }
 .game-container{
-    background-color: aquamarine;
     width:70em;
     margin: 0 auto;
     content: "";
@@ -20,7 +25,7 @@
     background-image: url("images/lane.png");
     background-repeat: repeat-y;
     background-size: cover;
-    height:1000px;
+    height:1030px;
     position: relative;
     
 
@@ -52,12 +57,9 @@
 .score-board {
     width: 20%;
     float:right;
-    background-image: url('images/black.jpg');
-      background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
+   background-color: rgba(216, 177, 48,0.5);
     padding:100px 0;
-    color: rgb(243, 243, 247);
+    color: rgb(248, 220, 188);
     font-size: 40px;
     line-height: 50px;
     text-align: center;
@@ -66,9 +68,9 @@
     display: block;
 }
 .score-board span #high-score{
-    color: rgb(8, 224, 134);
+    color: rgb(6, 250, 136);
 }
 .score-board span #your-score{
-    color: rgb(255, 251, 0);
+    color: rgb(238, 255, 0);
     
 }
