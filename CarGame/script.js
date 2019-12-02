@@ -8,8 +8,10 @@
         this.parentElement = parentElement;
         this.element = null;
         this.possibleDirection = 2;
+        this.bullet = null;
         var that = this;
-
+        this.eventListener;
+        var key = 0;
 
 
         this.drawCar = function () {
@@ -24,49 +26,70 @@
 
             this.parentElement.appendChild(car);
             this.element = car;
+            this.fireBullet = false;
+
+
             return this;
 
         }
 
         this.moveCar = function (e) {
 
-            var key = 0;
-            document.addEventListener('keydown', function (e) {
+            document.addEventListener('keydown', this.eventListener = function (e) {
                 key = e.keyCode;
 
-                var position = parseInt(that.element.style.left.replace("px", "").trim());
-
-                setTimeout(function () {
-
-                    if (key === 37 && position === 270 && that.possibleDirection === 2) {
-                        that.element.style.left = '70px';
-                        position = parseInt(that.element.style.left.replace("px", "").trim());
-                        that.possibleDirection = 1;
-
-                    }
-                    else if (key === 37 && position === 470 && that.possibleDirection === 1) {
-                        that.element.style.left = '270px';
-                        position = parseInt(that.element.style.left.replace("px", "").trim());
-                        that.possibleDirection = 2;
-
-                    }
-
-                    else if (key === 39 && position === 270 && that.possibleDirection === 2) {
-                        that.element.style.left = '470px';
-                        position = parseInt(that.element.style.left.replace("px", "").trim());
-                        that.possibleDirection = 1;
-
-                    }
-                    else if (key === 39 && position === 70 && that.possibleDirection === 1) {
-                        that.element.style.left = '270px';
-                        position = parseInt(that.element.style.left.replace("px", "").trim());
-                        that.possibleDirection = 2;
-
-                    }
-
-                }, 0);
-
             });
+
+
+            var position = parseInt(that.element.style.left.replace("px", "").trim());
+
+
+            if (key === 37 && position === 270 && that.possibleDirection === 2) {
+                that.element.style.left = '70px';
+                position = parseInt(that.element.style.left.replace("px", "").trim());
+                that.possibleDirection = 1;
+                document.removeEventListener('keydown', this.eventListener);
+                key = '';
+
+
+
+            }
+            else if (key === 37 && position === 470 && that.possibleDirection === 1) {
+                that.element.style.left = '270px';
+                position = parseInt(that.element.style.left.replace("px", "").trim());
+                that.possibleDirection = 2;
+                document.removeEventListener('keydown', this.eventListener);
+                key = '';
+
+
+            }
+
+            else if (key === 39 && position === 270 && that.possibleDirection === 2) {
+                that.element.style.left = '470px';
+                position = parseInt(that.element.style.left.replace("px", "").trim());
+                that.possibleDirection = 1;
+                document.removeEventListener('keydown', this.eventListener);
+                key = '';
+
+
+            }
+            else if (key === 39 && position === 70 && that.possibleDirection === 1) {
+                that.element.style.left = '270px';
+                position = parseInt(that.element.style.left.replace("px", "").trim());
+                that.possibleDirection = 2;
+                document.removeEventListener('keydown', this.eventListener);
+                key = '';
+
+
+            }
+
+
+            if (key === 38) {
+                this.fireBullet = true;
+                document.removeEventListener('keydown', this.eventListener);
+                key = '';
+            }
+
         }
 
     }
@@ -77,8 +100,8 @@
         this.position = position;
         this.element = null;
         this.parentElement = parentElement;
-        this.distance = 0;
         var that = this;
+        this.distance = undefined;
 
         function randomObstacle() {
             var randomNumber = Math.floor(Math.random() * (3) + 1);
@@ -99,7 +122,7 @@
             var obstacle = document.createElement('div');
             obstacle.style.width = this.width + 'px';
             obstacle.style.height = this.height + 'px';
-            obstacle.style.top = -300 + 'px';
+            obstacle.style.top = '-200px';
             obstacle.style.left = this.position + 'px';
             obstacle.style.backgroundImage = randomObstacle();
             obstacle.classList.add('obstacle');
@@ -115,10 +138,54 @@
         this.updateObstacle = function () {
 
             that.element.style.top = that.distance + 'px';
-            that.distance += SPEED;
+            that.distance = parseInt(that.element.style.top.replace('px', '').trim());
+
+            that.distance += SPEED
+
+
         }
 
     }
+
+    function Bullet(positionX, positionY, parentElement) {
+        this.positionX = positionX;
+        this.positionY = positionY;
+        this.parentElement = parentElement;
+        this.bulletElement = null;
+        var that = this;
+
+
+
+        this.createBullet = function () {
+            var bullet = document.createElement('div');
+            bullet.style.width = 10 + 'px';
+            bullet.style.height = 10 + 'px';
+            bullet.style.backgroundColor = "transparent";
+            bullet.style.position = "absolute";
+            bullet.style.borderRadius = "25px"
+            bullet.style.left = this.positionX + 'px';
+            bullet.style.bottom = this.positionY + 'px';
+            this.parentElement.appendChild(bullet);
+            this.bulletElement = bullet;
+        }
+
+        this.setBulletPosition = function () {
+            this.bulletElement.style.left = this.positionX + 'px';
+            this.bulletElement.style.bottom = this.positionY + 'px';
+        }
+
+        this.updateBullet = function () {
+            this.bulletElement.style.backgroundColor = "red";
+
+            this.positionY += 10;
+            this.setBulletPosition();
+
+        }
+
+
+
+    }
+
     function Game(heightPlayer, widthPlayer, heightObs, widthObs, parentElement) {
         var obstacles = [];
         this.heightPlayer = heightPlayer;
@@ -138,6 +205,7 @@
         var play;
         var score = 0;
         var highScore = 0;
+
         this.randomLane = function () {
             return Math.floor(Math.random() * 59 + 1);
         }
@@ -170,9 +238,24 @@
                         || (obstacles[i].element.style.left === '470px' && player.element.style.left === '470px'))) {
                     clearInterval(play);
 
-                    setTimeout(this.gameOver(), 30);
+                    this.gameOver();
                 }
             }
+        }
+
+        this.bulletCollisionDetection = function (bullet) {
+            for (var i = 0; i < obstacles.length; i++) {
+                if (parseInt(bullet.bulletElement.style.top.replace("px", "").trim()) - parseInt(obstacles[i].element.style.top.replace("px", "").trim()) == 0
+                    && ((obstacles[i].element.style.left === '270px' && bullet.bulletElement.style.left === '270px')
+                        || (obstacles[i].element.style.left === '70px' && bullet.bulletElement.style.left === '70px')
+                        || (obstacles[i].element.style.left === '470px' && bullet.bulletElement.style.left === '470px'))
+                ) {
+
+                    console.log('bullet hit');
+
+                }
+            }
+
         }
 
         this.welcomeScreen = function () {
@@ -229,8 +312,8 @@
                         </div>
                     `;
 
-       
- var parentElement = document.getElementsByClassName('road')[0];
+
+                var parentElement = document.getElementsByClassName('road')[0];
                 var playGame = new Game(200, 100, 190, 100, parentElement);
                 playGame.newGame();
 
@@ -244,6 +327,8 @@
         this.newGame = function () {
             var player = new PlayerCar(this.heightPlayer, this.widthPlayer, this.parentElement).drawCar();
 
+            var bullet = new Bullet(parseInt(player.element.style.left.replace("px", "").trim())+50, parseInt(player.element.style.bottom.replace("px", "").trim()) + 200, this.parentElement);
+            bullet.createBullet();
 
             play = setInterval(function () {
                 document.getElementById("your-score").innerHTML = score;
@@ -262,8 +347,8 @@
                     score += 1;
 
                     if (score % 10 === 0) {
-                        SPEED+= 5;
-                        if (SPEED>= 50) {
+                        SPEED += 5;
+                        if (SPEED >= 50) {
                             SPEED = 50;
                         }
                     }
@@ -271,7 +356,7 @@
 
                 }
 
-                that.playGame(player);
+                that.playGame(player, bullet);
                 totalDistance += 40;
 
 
@@ -279,7 +364,30 @@
             }, refreshRate);
         }
 
-        this.playGame = function (player) {
+        this.playGame = function (player, bullet) {
+
+            if (player.fireBullet === true) {
+
+                bullet.updateBullet();
+
+
+
+                if (bullet.bulletElement.style.bottom === '700px') {
+
+                    bullet.positionY = parseInt(player.element.style.bottom.replace("px", "").trim())+200;
+                    bullet.positionX = parseInt(player.element.style.left.replace("px", "").trim())+50;
+
+                    bullet.createBullet();
+
+                    player.fireBullet = false;
+
+                }
+            }else{
+                 bullet.positionY = parseInt(player.element.style.bottom.replace("px", "").trim())+200;
+                    bullet.positionX = parseInt(player.element.style.left.replace("px", "").trim())+50;
+                    bullet.setBulletPosition();
+            }
+
             player.moveCar();
             this.parentElement.style.backgroundPositionY = pos + 'px';
             pos += SPEED;
@@ -288,6 +396,8 @@
 
                 obstacles[i].updateObstacle();
                 this.collisionDetection(player);
+                this.bulletCollisionDetection(bullet);
+
                 if (parseInt(obstacles[i].element.style.top.replace('px', '').trim()) >= 550) {
 
                     obstacles[i].destroyObstacle();
@@ -302,7 +412,7 @@
 
 
         }
-        this.gameOver = function (player) {
+        this.gameOver = function () {
             var road = document.getElementsByClassName('game-wrapper')[0];
             var scoreBoard = document.getElementsByClassName('score-board')[0];
             var container = document.getElementsByClassName('game-container')[0];
@@ -370,7 +480,7 @@
         </div>
     `;
 
-                SPEED=20;
+                SPEED = 20;
 
                 var parentElement = document.getElementsByClassName('road')[0];
                 var playGame = new Game(200, 100, 190, 100, parentElement);
