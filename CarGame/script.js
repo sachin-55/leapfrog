@@ -91,6 +91,9 @@
             }
 
         }
+        this.getBulletFireStatus = function () {
+            return that.fireBullet;
+        }
 
     }
 
@@ -243,15 +246,29 @@
             }
         }
 
-        this.bulletCollisionDetection = function (bullet) {
-            for (var i = 0; i < obstacles.length; i++) {
-                if (parseInt(bullet.bulletElement.style.top.replace("px", "").trim()) - parseInt(obstacles[i].element.style.top.replace("px", "").trim()) == 0
-                    && ((obstacles[i].element.style.left === '270px' && bullet.bulletElement.style.left === '270px')
-                        || (obstacles[i].element.style.left === '70px' && bullet.bulletElement.style.left === '70px')
-                        || (obstacles[i].element.style.left === '470px' && bullet.bulletElement.style.left === '470px'))
-                ) {
+        this.bulletCollisionDetection = function (bullet, player) {
 
-                    console.log('bullet hit');
+
+            for (var i = 0; i < obstacles.length; i++) {
+
+                if (700 - parseInt(bullet.bulletElement.style.bottom.replace("px", "").trim()) - 200 - parseInt(obstacles[i].element.style.top.replace("px", "").trim()) <= 5
+                    && ((obstacles[i].element.style.left === '270px' && bullet.bulletElement.style.left === 270 + 50 + 'px')
+                        || (obstacles[i].element.style.left === '70px' && bullet.bulletElement.style.left === 50 + 70 + 'px')
+                        || (obstacles[i].element.style.left === '470px' && bullet.bulletElement.style.left === 50 + 470 + 'px'))
+                    && player.getBulletFireStatus()) {
+
+                    // bullet.positionY = parseInt(player.element.style.bottom.replace("px", "").trim()) + 200;
+                    // bullet.positionX = parseInt(player.element.style.left.replace("px", "").trim()) + 50;
+
+                    bullet.bulletElement.style.backgroundColor = "transparent";
+
+                    player.fireBullet = false;
+
+                    obstacles[i].destroyObstacle();
+                    obstacles.splice(i, 1);
+                    obstacleCount--;
+
+
 
                 }
             }
@@ -327,7 +344,7 @@
         this.newGame = function () {
             var player = new PlayerCar(this.heightPlayer, this.widthPlayer, this.parentElement).drawCar();
 
-            var bullet = new Bullet(parseInt(player.element.style.left.replace("px", "").trim())+50, parseInt(player.element.style.bottom.replace("px", "").trim()) + 200, this.parentElement);
+            var bullet = new Bullet(parseInt(player.element.style.left.replace("px", "").trim()) + 50, parseInt(player.element.style.bottom.replace("px", "").trim()) + 200, this.parentElement);
             bullet.createBullet();
 
             play = setInterval(function () {
@@ -370,35 +387,35 @@
 
                 bullet.updateBullet();
 
-
+                this.bulletCollisionDetection(bullet, player);
 
                 if (bullet.bulletElement.style.bottom === '700px') {
 
-                    bullet.positionY = parseInt(player.element.style.bottom.replace("px", "").trim())+200;
-                    bullet.positionX = parseInt(player.element.style.left.replace("px", "").trim())+50;
+                    bullet.positionY = parseInt(player.element.style.bottom.replace("px", "").trim()) + 200;
+                    bullet.positionX = parseInt(player.element.style.left.replace("px", "").trim()) + 50;
 
-                    bullet.createBullet();
+                    bullet.bulletElement.style.backgroundColor = "transparent";
 
                     player.fireBullet = false;
 
                 }
-            }else{
-                 bullet.positionY = parseInt(player.element.style.bottom.replace("px", "").trim())+200;
-                    bullet.positionX = parseInt(player.element.style.left.replace("px", "").trim())+50;
-                    bullet.setBulletPosition();
+            } else {
+                bullet.positionY = parseInt(player.element.style.bottom.replace("px", "").trim()) + 200;
+                bullet.positionX = parseInt(player.element.style.left.replace("px", "").trim()) + 50;
+                bullet.setBulletPosition();
             }
 
             player.moveCar();
             this.parentElement.style.backgroundPositionY = pos + 'px';
             pos += SPEED;
+
             for (var i = 0; i < obstacles.length; i++) {
 
 
                 obstacles[i].updateObstacle();
                 this.collisionDetection(player);
-                this.bulletCollisionDetection(bullet);
 
-                if (parseInt(obstacles[i].element.style.top.replace('px', '').trim()) >= 550) {
+                if (parseInt(obstacles[i].element.style.top.replace('px', '').trim()) >= 600) {
 
                     obstacles[i].destroyObstacle();
                     obstacles.splice(i, 1);
@@ -416,9 +433,16 @@
             var road = document.getElementsByClassName('game-wrapper')[0];
             var scoreBoard = document.getElementsByClassName('score-board')[0];
             var container = document.getElementsByClassName('game-container')[0];
+            
 
-            container.removeChild(road);
-            container.removeChild(scoreBoard);
+  container.removeChild(road);
+
+  container.removeChild(scoreBoard);
+
+
+            
+
+
 
             var game = document.createElement('div');
             game.style.height = 600 + 'px';
@@ -508,6 +532,6 @@
     var parentElement = document.getElementsByClassName('road')[0];
     var playGame = new Game(200, 100, 190, 100, parentElement);
     playGame.welcomeScreen(playGame);
-
+ 
 
 })();
