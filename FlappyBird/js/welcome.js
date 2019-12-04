@@ -6,6 +6,7 @@ class Welcome {
         this.element = null;
         this.gamePlay = null;
         this.welcomeBtn = null;
+        this.state=false;
     }
 
     draw = () => {
@@ -19,6 +20,8 @@ class Welcome {
         welcome.setAttribute('id', 'welcome');
         welcome.style.backgroundPosition = 'center center';
         welcome.style.backgroundImage = 'url("images/message.png")';
+        welcome.style.top = '0px';
+
         this.parentElement.appendChild(welcome);
         this.element = welcome;
 
@@ -34,8 +37,8 @@ class Welcome {
 
         welcomebtn.style.border = '2px solid black';
         welcomebtn.style.backgroundRepeat = 'no-repeat';
-        welcomebtn.style.top = '300px';
-        welcomebtn.style.left = '300px';
+        welcomebtn.style.top = '370px';
+        welcomebtn.style.left = '400px';
         welcomebtn.style.cursor = 'pointer';
 
         welcomebtn.classList.add('reset-score');
@@ -51,8 +54,9 @@ class Welcome {
 
     startGame = () => {
         this.welcomeBtn.addEventListener('click', () => {
-            this.parentElement.removeChild(document.getElementById('welcome'));
+            this.state=true;
 
+            this.parentElement.removeChild(document.getElementById('welcome'));
 
         });
     }
