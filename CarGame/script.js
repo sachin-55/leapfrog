@@ -46,6 +46,7 @@
 
             if (key === 37 && position === 270 && that.possibleDirection === 2) {
                 that.element.style.left = '70px';
+
                 position = parseInt(that.element.style.left.replace("px", "").trim());
                 that.possibleDirection = 1;
                 document.removeEventListener('keydown', this.eventListener);
@@ -395,7 +396,7 @@
                     bullet.positionX = parseInt(player.element.style.left.replace("px", "").trim()) + 50;
 
                     bullet.bulletElement.style.backgroundColor = "transparent";
-
+    
                     player.fireBullet = false;
 
                 }
@@ -512,16 +513,6 @@
 
 
             });
-
-
-
-
-
-
-
-
-
-
 
 
         }
