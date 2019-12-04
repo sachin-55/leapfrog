@@ -106,14 +106,14 @@ class Game {
     init = () => {
           var welcome = this.createWelcomeScreen();
             // welcome.draw();
-           
+        //    welcome.startGame();
         this.draw();
         var bird = new Bird(24, 34, this.element);
         bird.draw();
 
 
 this.state= setInterval(() => {
-// if(this.state===true){
+// if(this.state==true){
 
             bird.updateBird();
             bird.flyBird();

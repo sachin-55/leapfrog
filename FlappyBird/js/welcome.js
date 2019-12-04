@@ -44,15 +44,18 @@ class Welcome {
         this.element.appendChild(welcomebtn);
         this.welcomeBtn = welcomebtn;
 
-        this.welcomeBtn.addEventListener('click', () => {
-            this.parentElement.removeChild(document.getElementById('welcome'));
-            
 
-        });
 
 
     }
 
+    startGame = () => {
+        this.welcomeBtn.addEventListener('click', () => {
+            this.parentElement.removeChild(document.getElementById('welcome'));
+
+
+        });
+    }
 
     // init = () => {
     //     this.draw();

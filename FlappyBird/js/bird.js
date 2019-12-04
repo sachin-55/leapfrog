@@ -14,7 +14,7 @@ class Bird {
         var bird = document.createElement('div');
         bird.style.width = this.width + 'px';
         bird.style.height = this.height + 'px';
-        bird.style.background = 'url("images/yellowbird-upflap.png")';
+        bird.style.background = 'url("images/bird.gif")';
         bird.style.position = 'absolute';
         bird.style.backgroundSize='cover';
         bird.style.left = 100 + 'px';
@@ -34,7 +34,7 @@ class Bird {
         this.y=400;
         this.dy=5;  
         }
-        this.element.style.background = 'url("images/yellowbird-upflap.png")';
+        // this.element.style.background = 'url("images/yellowbird-upflap.png")';
 
 
     }
@@ -52,7 +52,7 @@ class Bird {
 
             document.removeEventListener('keyup',keyFunctionHandler);
             this.key=null;
-        this.element.style.background = 'url("images/yellowbird-downflap.png")';
+        // this.element.style.background = 'url("images/yellowbird-downflap.png")';
 
 
         }

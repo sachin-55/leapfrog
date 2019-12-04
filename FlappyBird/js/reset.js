@@ -44,14 +44,14 @@ class Reset {
         resetbtn.style.backgroundColor = 'green';
         resetbtn.style.borderRadius = '25px';
 
-        resetbtn.style.border = '2px solid black';
-        resetbtn.style.backgroundRepeat = 'no-repeat';
+        // resetbtn.style.border = '2px solid black';
+        // resetbtn.style.backgroundRepeat = 'no-repeat';
         resetbtn.style.top = '300px';
         resetbtn.style.left = '300px';
         resetbtn.style.cursor = 'pointer';
 
         resetbtn.classList.add('reset-score');
-        resetbtn.innerHTML = 'Reset';
+        resetbtn.innerHTML = 'RESTART';
 
         this.element.appendChild(resetbtn);
         this.resetElement = resetbtn;
