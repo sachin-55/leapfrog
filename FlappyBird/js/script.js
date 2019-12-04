@@ -14,6 +14,7 @@ class Game {
         this.score = 0;
         this.scoreElement = null;
         this.highscore=0;
+        this.state=true;
     }
 
     draw = () => {
@@ -21,6 +22,8 @@ class Game {
         wrapper.style.height = this.height + 'px';
         wrapper.style.width = this.width + 'px';
         wrapper.style.position = 'relative';
+        wrapper.setAttribute('id','wrapper');
+
 
         wrapper.style.background = 'url("images/base.png") repeat-x bottom';
         this.parentElement.appendChild(wrapper);
@@ -97,19 +100,22 @@ class Game {
     }
 
     createWelcomeScreen=()=>{
-        return new Welcome(560,580,this.parentElement).draw();
+        return new Welcome(560,580,this.parentElement);
     }
 
     init = () => {
-   
+          var welcome = this.createWelcomeScreen();
+            // welcome.draw();
+           
         this.draw();
         var bird = new Bird(24, 34, this.element);
         bird.draw();
 
-    
-       this.state= setInterval(() => {
-            bird.updateBird();
 
+this.state= setInterval(() => {
+// if(this.state===true){
+
+            bird.updateBird();
             bird.flyBird();
             this.backgroundMotion();
             this.clock += 30;
@@ -129,9 +135,12 @@ class Game {
                 this.pipeCollisionDetection(bird, this.pipes[i]);
                   
             }
-          
+        //   }
 
-        }, 30);
+        }, 30);  
+
+    
+                                                                                                                                                  
     }
 }
 

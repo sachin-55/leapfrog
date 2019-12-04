@@ -18,6 +18,7 @@ class Reset {
         reset.style.backgroundRepeat = 'no-repeat';
         reset.style.backgroundPosition = '300px 100px';
         reset.style.top = '0px';
+        reset.setAttribute('id','reset');
         this.parentElement.appendChild(reset);
         this.element = reset;
 
@@ -56,7 +57,9 @@ class Reset {
         this.resetElement = resetbtn;
 
         this.resetElement.addEventListener('click', () => {
-            delete(this.parentElement);
+            this.parentElement.removeChild(document.getElementById('wrapper'));
+            this.parentElement.removeChild(document.getElementById('reset'));
+
             var parentElement = document.getElementsByClassName('flappy-bird')[0];
             var game = new Game(560, 680, parentElement);
             game.init();
