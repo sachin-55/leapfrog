@@ -115,11 +115,12 @@ class Game {
           
 
 this.state= setInterval(() => {
+            this.backgroundMotion();
+
 if(welcome.state==true){
 
             bird.updateBird();
             bird.flyBird();
-            this.backgroundMotion();
             this.clock += 30;
             if (this.clock % 3000 === 0) {
                 this.pipes.push(this.generatePipe());
