@@ -30,6 +30,8 @@ class Bird {
         this.dx +=this.gravity;
         this.y -= this.dy;
         if(this.y<100){
+        new Reset(this.parentElement.height,this.parentElement.width,this.parentElement,0).draw();  
+
         this.element.style.bottom=400+'px';
         this.y=400;
         this.dy=5;  
@@ -45,7 +47,7 @@ class Bird {
         });
 
         if (this.key === 32) {
-        
+            
             this.y += this.upSpeed;
             this.element.style.bottom = this.y + 'px';
 
