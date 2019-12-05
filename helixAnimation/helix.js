@@ -6,10 +6,10 @@ canvas.classList.add('helixCanvas');
 canvas.style.margin = '10px 20%';
 
 var phase = 0;
-var speed = 0.02;
+var speed = 0.05;
 var maxCircleRadius = 10;
 var frameCount = 0;
-var numRows = 20;
+var numRows = 10;
 var numCols = 10;
 var numStrands = 2;
 var y;
@@ -32,7 +32,7 @@ function draw() {
         }
         x = 0;
         for (var col = 0; col < numCols; col++) {
-            x = x + 20;
+            x = x + 40;
 
 
             colOffset = (col * 2 * Math.PI) / 10;
