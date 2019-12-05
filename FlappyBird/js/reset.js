@@ -1,5 +1,5 @@
 class Reset {
-    constructor(height, width, parentElement, score) {
+    constructor(height, width, parentElement, score,welcome) {
         this.height = height;
         this.width = width;
         this.parentElement = parentElement;
@@ -7,6 +7,7 @@ class Reset {
         this.gamePlay = null;
         this.score = score || 0;
         this.resetElement = null;
+        this.welcome=welcome;
     }
 
     draw = () => {
@@ -18,7 +19,7 @@ class Reset {
         reset.style.backgroundRepeat = 'no-repeat';
         reset.style.backgroundPosition = '300px 100px';
         reset.style.top = '0px';
-        reset.setAttribute('id','reset');
+        reset.setAttribute('id', 'reset');
         this.parentElement.appendChild(reset);
         this.element = reset;
 
@@ -57,12 +58,16 @@ class Reset {
         this.resetElement = resetbtn;
 
         this.resetElement.addEventListener('click', () => {
+
             this.parentElement.removeChild(document.getElementById('wrapper'));
             this.parentElement.removeChild(document.getElementById('reset'));
+
+            this.welcome.state=false;
 
             var parentElement = document.getElementsByClassName('flappy-bird')[0];
             var game = new Game(560, 680, parentElement);
             game.init();
+           
 
 
         });

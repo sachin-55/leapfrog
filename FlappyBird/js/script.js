@@ -1,4 +1,4 @@
-var numbers= ['0.png','1.png','2.png','3.png','4.png','5.png','6.png','7.png','8.png','9.png']
+var numbers = ['0.png', '1.png', '2.png', '3.png', '4.png', '5.png', '6.png', '7.png', '8.png', '9.png']
 
 class Game {
 
@@ -10,11 +10,12 @@ class Game {
         this.position = null;
         this.clock = 0;
         this.pipes = [];
-        this.state=null;
+        this.state = null;
         this.score = 0;
         this.scoreElement = null;
-        this.highscore=0;
-        this.start=false;
+        this.highscore = 0;
+        this.start = false;
+        this.welcome = null;
     }
 
     draw = () => {
@@ -22,7 +23,8 @@ class Game {
         wrapper.style.height = this.height + 'px';
         wrapper.style.width = this.width + 'px';
         wrapper.style.position = 'relative';
-        wrapper.setAttribute('id','wrapper');
+        wrapper.setAttribute('id', 'wrapper');
+        wrapper.style.overflow = 'hidden';
 
 
         wrapper.style.background = 'url("images/base.png") repeat-x bottom';
@@ -33,7 +35,7 @@ class Game {
         var score = document.createElement('div');
         score.classList.add('score');
         this.element.appendChild(score);
-        this.scoreElement=score;
+        this.scoreElement = score;
     }
 
     backgroundMotion = () => {
@@ -52,12 +54,12 @@ class Game {
         pipe.drawPipe();
         return pipe;
     }
-    getNumberImage=(number)=>{
-        var output='';
-         var subString=number.split('');
+    getNumberImage = (number) => {
+        var output = '';
+        var subString = number.split('');
 
-        for(var i=0;i<subString.length;i++){
-            output+='<img src="images/' + numbers[parseInt(subString[i])] + '" />'
+        for (var i = 0; i < subString.length; i++) {
+            output += '<img src="images/' + numbers[parseInt(subString[i])] + '" />'
         }
 
         return output;
@@ -72,82 +74,89 @@ class Game {
         var topPipeHeight = parseInt(pipes.topElement.style.height.replace('px', '').trim());
         var bottomPipeTop = parseInt(pipes.bottomElement.style.top.replace('px', '').trim());
 
-        var pipeLeft=parseInt(pipes.element.style.left.replace('px', '').trim());
+        var pipeLeft = parseInt(pipes.element.style.left.replace('px', '').trim());
 
-        if (((birdLeft+birdWidth)>=pipeLeft && birdLeft<=pipeLeft+52  )&&(birdTop <= topPipeHeight || birdTop + birdHeight >= bottomPipeTop) || birdTop+birdHeight>=this.height-120 ) {
-        clearInterval(this.state);      
-        new Reset(this.height,this.width,this.parentElement,this.score).draw();  
+        if (((birdLeft + birdWidth) >= pipeLeft && birdLeft <= pipeLeft + 52) && (birdTop <= topPipeHeight || birdTop + birdHeight >= bottomPipeTop) || birdTop + birdHeight >= this.height - 120) {
+            clearInterval(this.state);
+            new Reset(this.height, this.width, this.parentElement, this.score, this.welcome).draw();
 
         }
-        if(pipeLeft==50){
-            this.score+=1;
+        if (pipeLeft == 50) {
+            this.score += 1;
             var str = this.score.toString();
-           var output= this.getNumberImage(str);
-           this.scoreElement.style.background='transparent';
-           this.scoreElement.innerHTML=output;
+            var output = this.getNumberImage(str);
+            this.scoreElement.style.background = 'transparent';
+            this.scoreElement.innerHTML = output;
 
-             if (localStorage.getItem('flappyHighscore') !== null) {
-                    if (localStorage.getItem('flappyHighscore') < this.score) {
-                        localStorage.setItem('flappyHighscore', this.score);
-                    }
-                } else {
+            if (localStorage.getItem('flappyHighscore') !== null) {
+                if (localStorage.getItem('flappyHighscore') < this.score) {
                     localStorage.setItem('flappyHighscore', this.score);
                 }
-            
+            } else {
+                localStorage.setItem('flappyHighscore', this.score);
+            }
+
         }
 
 
     }
 
-    createWelcomeScreen=()=>{
-        return new Welcome(560,580,this.parentElement);
+    createWelcomeScreen = () => {
+        return new Welcome(560, 580, this.parentElement);
     }
 
     init = () => {
 
-          var welcome = this.createWelcomeScreen();
-         
+        this.welcome = this.createWelcomeScreen();
+
         this.draw();
         var bird = new Bird(24, 34, this.element);
         bird.draw();
-            welcome.draw();
-         welcome.startGame();
-          
+        if (this.welcome.state == false) {
+            this.welcome.draw();
+            this.welcome.startGame();
+            console.log(this.welcome.state);
 
-this.state= setInterval(() => {
+        }
+
+
+
+        this.state = setInterval(() => {
             this.backgroundMotion();
 
-if(welcome.state==true){
+            if (this.welcome.state == true) {
 
-            bird.updateBird();
-            bird.flyBird();
-            this.clock += 30;
-            if (this.clock % 3000 === 0) {
-                this.pipes.push(this.generatePipe());
-            }
-
-            for (var i = 0; i < this.pipes.length; i++) {
-                this.pipes[i].movePipe();
-
-                if (parseInt(this.pipes[i].element.style.left.replace('px', '').trim()) < -40) {
-
-                    this.element.removeChild(this.pipes[i].element);
-
-                    this.pipes.splice(i, 1);
+                bird.updateBird();
+                bird.flyBird();
+                this.clock += 30;
+                if (this.clock % 3000 === 0) {
+                    this.pipes.push(this.generatePipe());
                 }
-                this.pipeCollisionDetection(bird, this.pipes[i]);
-                  
+
+                for (var i = 0; i < this.pipes.length; i++) {
+                    this.pipes[i].movePipe();
+
+                    if (parseInt(this.pipes[i].element.style.left.replace('px', '').trim()) < -40) {
+
+                        this.element.removeChild(this.pipes[i].element);
+
+                        this.pipes.splice(i, 1);
+                    }
+                    this.pipeCollisionDetection(bird, this.pipes[i]);
+
+                }
             }
-          }
 
-        }, 30);  
+        }, 30);
 
-    
-                                                                                                                                                  
+
+
     }
 }
 
 var parentElement = document.getElementsByClassName('flappy-bird')[0];
 var game = new Game(560, 680, parentElement);
 game.init();
-
+// var parentElement1 = document.getElementsByClassName('flappy-bird1')[0];
+// var game1 = new Game(560, 680, parentElement1);
+// game1.init();

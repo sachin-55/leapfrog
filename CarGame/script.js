@@ -143,7 +143,6 @@
 
             that.element.style.top = that.distance + 'px';
             that.distance = parseInt(that.element.style.top.replace('px', '').trim());
-
             that.distance += SPEED
 
 

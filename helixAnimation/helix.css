@@ -1,0 +1,9 @@
+*{
+    margin:0;
+    padding:0;
+}
+.helixCanvas{
+    border-radius: 5px;
+    border: 1px solid black;
+    background-color: #003648;
+}

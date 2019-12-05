@@ -61,19 +61,6 @@ class Welcome {
         });
     }
 
-    // init = () => {
-    //     this.draw();
-    //     this.gamePlay = this.createGame();
-    //     this.gamePlay.draw();
-    //     this.gamePlay.backgroundMotion();
-    //     var bird = this.createBird();
-    //     bird.draw();
-    //    this.parentElement.addEventListener('click',()=>{
-
-    //        this.gamePlay.init();
-    //    });
-
-
-    // }
+  
 
 }

@@ -29,6 +29,8 @@ class Bird {
         this.element.style.bottom = this.y + 'px';
         this.dx +=this.gravity;
         this.y -= this.dy;
+        this.element.style.transform= 'rotate(5deg)';
+
         if(this.y<100){
         new Reset(this.parentElement.height,this.parentElement.width,this.parentElement,0).draw();  
 
@@ -50,6 +52,7 @@ class Bird {
             
             this.y += this.upSpeed;
             this.element.style.bottom = this.y + 'px';
+        this.element.style.transform= 'rotate(-90deg)';
 
 
             document.removeEventListener('keyup',keyFunctionHandler);
