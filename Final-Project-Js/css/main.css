@@ -1,0 +1,26 @@
+*{
+    margin:0;padding:0
+}
+.container{
+    text-align: center;
+    overflow: hidden;
+    margin:0 auto;
+    width: 500px;
+    height: 700px;
+    position: relative;
+}   
+#cat-canvas{
+    display:inline-block;
+    background-image:url("../images/background.png");
+    background-size: contain;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 10;
+}
+#world-canvas{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 20;
+}
