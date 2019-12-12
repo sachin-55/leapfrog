@@ -32,7 +32,15 @@ function World() {
     this.height = that.grid.length;
     canvas.width = this.width * this.gridWidth;
     canvas.height = 700;
-
+    
+    this.getGridPosition = function(x,y){
+        var gridCoordinate ={
+            'i':x/50,
+            'j':y/50,
+            'value':that.grid[y/50][x/50]
+        }
+        return gridCoordinate;
+    }
 
 
 
@@ -70,7 +78,7 @@ function World() {
 
     this.moveWorld = function () {
         canvas.style.left = -x + 'px';
-        x += 3;
+        x += 5  ;
 
         if (x >= this.gridWidth * this.width - 500) {
             x = this.gridWidth * this.width - 500;

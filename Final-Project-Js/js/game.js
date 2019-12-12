@@ -23,8 +23,10 @@ function Game(height, width) {
     this.then = null;
     this.elapsed = null;
     this.startTime = null;
+    this.catX = 100;
     var that = this;
-    
+    var rollScreen = true;
+
     this.createCanvas = function () {
         this.canvas = document.getElementById('cat-canvas');
         this.canvas.width = this.width;
@@ -64,8 +66,43 @@ function Game(height, width) {
         this.animate();
     }
 
+    this.collisionDetection = function () {
+        var coOrdinate = {
+            'i': 0,
+            'j': 0,
+            'value': 10
+        };
+        that.catX += 5;
+        var catY = that.cat.getPositionY();
+        var catSize = 50;
+        if (that.catX % 50 === 0) {
+            coOrdinate = that.world.getGridPosition(that.catX, catY + catSize);
+            if (coOrdinate.value == 0 && that.block.length == 0) {
+                that.ctx.clearRect(100, that.cat.positionY, 50, 50);
+                that.cat.moveDown();
+                that.cat.drawCat();
+            }
+        }
+
+
+        if (that.catX % 50 === 0) {
+            coOrdinate = that.world.getGridPosition(that.catX + catSize, catY);
+            if (coOrdinate.value != 0) {
+                rollScreen = false;
+
+            }
+
+        }
+
+
+
+    }
+
     this.animate = function () {
-        requestAnimationFrame(that.animate);
+        if (rollScreen === true) {
+            requestAnimationFrame(that.animate);
+
+        }
 
         that.now = Date.now();
         that.elapsed = that.now - that.then;
@@ -75,9 +112,9 @@ function Game(height, width) {
             that.then = that.now - (that.elapsed % that.fpsInterval);
 
             that.frameCount++
-            console.log(that.frameCount);
 
             that.world.moveWorld();
+            that.collisionDetection();
 
             if (key === 32) {
 
@@ -92,4 +129,4 @@ function Game(height, width) {
 }
 var game = new Game(700, 500);
 game.init();
-game.startAnimating(30);
+game.startAnimating(60);

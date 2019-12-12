@@ -18,8 +18,6 @@ function Cat(height, width, context) {
     this.moveUp = function () {
 
         this.positionY -= catHeight;
-        console.log(this.positionY);
-
         this.cat.onload = function () {
             that.context.drawImage(that.cat, 100, that.positionY, 50, 50);
         }
@@ -30,7 +28,9 @@ function Cat(height, width, context) {
             that.context.drawImage(that.cat, 100, that.positionY, 50, 50);
         }
     }
-
+    this.getPositionY = function(){
+        return this.positionY;
+    }
 
 
 
