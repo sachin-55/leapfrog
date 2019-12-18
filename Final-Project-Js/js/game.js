@@ -24,11 +24,18 @@ function Game(height, width) {
     this.elapsed = null;
     this.startTime = null;
     this.catX = 100;
+    var catY = null;
     var that = this;
-    var rollScreen = true;
-    var prevBlocks = 450;
-    var currentBlocks = 0;
-
+    var rollScreen = false;
+    var perfect = 0;
+    var bulletSpeed = 10;
+    var score = 0;
+    var startGame = true;
+    var gameover = false;
+    var bullets = [];
+    var numberOfBullets = 20;
+    var bulletNumber = 0;
+    var fireBullet = false;
     this.aroundCat = {
         'top': 0,
         'right': 0,
@@ -43,34 +50,93 @@ function Game(height, width) {
         this.canvas.width = this.width;
         this.canvas.height = this.height;
         this.ctx = this.canvas.getContext('2d');
+
+
     }
 
 
     this.createCat = function () {
         this.cat = new Cat(50, 50, this.ctx);
         this.cat.drawCat();
+
     }
+
     this.createBlock = function (posX, posY) {
         var b = new Block(posX, posY, 50, 50, this.ctx);
         this.blocks.push(b.drawBlock());
     }
+
     this.createWorld = function () {
         this.world = new World();
         this.world.drawGrid();
     }
 
+    this.createBullet = function () {
+        catY = that.cat.getPositionY();
 
+        // for (var i = 0; i < numberOfBullets; i++) {
+        bullets.push(new Bullet(this.ctx, 100 + 50, catY, 5, bulletSpeed));
+        // }
+    }
+
+    this.welcome = function () {
+        new Welcome(this.ctx, this.canvas).draw();
+
+        var start = setInterval(function () {
+            that.cat.moveDown();
+            that.cat.drawCat();
+            that.ctx.clearRect(100, that.cat.getPositionY() - 5, 50, 50);
+            if (that.cat.getPositionY() == 500) {
+                clearInterval(start);
+                console.log("clickable");
+
+
+                that.canvas.onclick = function (e) {
+                    var mouse = {
+                        'x': window.innerWidth - (window.innerWidth),
+                        'y': e.y
+                    }
+
+                    var img = new Image();
+                    img.src = 'images/paws.png';
+                    img.onload = function () {
+                        that.ctx.drawImage(img, 10, 12, 50, 50);
+                    }
+                    that.ctx.clearRect(0, 0, that.width, that.height);
+                    that.cat.drawCat();
+                    rollScreen = true;
+
+                    if (startGame == true && gameover == false) {
+                        that.canvas.onclick = null;
+                        game.startAnimating(600);
+
+                    }
+                }
+
+
+
+            }
+
+        }, 20);
+
+    }
 
     this.init = function () {
         that.createCanvas();
         that.createCat();
         that.createWorld();
+        that.welcome();
+
+
 
     }
-    this.updatevalue = function () {
-        var catY = that.cat.getPositionY();
-        that.catX += 5;
+    this.updateStatusBar = function () {
+        new StatusBar(this.ctx).update(this.catX, that.world.getWidth());
+    }
 
+    this.updatevalue = function () {
+        catY = that.cat.getPositionY();
+        that.catX += 5;
         this.aroundCat.top = that.world.getGridPosition(that.catX, catY - 50).value;
         this.aroundCat.right = that.world.getGridPosition(that.catX + 50, catY).value;
         this.aroundCat.bottom = that.world.getGridPosition(that.catX, catY + 50).value;
@@ -84,28 +150,104 @@ function Game(height, width) {
 
         });
 
+        if (that.catX % 50 == 0 && that.catX > 500) {
+            score += 10
+            that.ctx.clearRect(60, 0, 100, 50);
+            this.ctx.font = "35px Arial";
+            this.ctx.fillStyle = "rgba(255, 255, 255,0.7)";
+            this.ctx.fillText(score, 60, 50);
+        } else if (that.catX % 50 == 0 && that.catX < 500) {
+            score = 0
+            that.ctx.clearRect(60, 0, 100, 50);
+            this.ctx.font = "35px Arial";
+            this.ctx.fillStyle = "rgba(255, 255, 255,0.7)";
+            this.ctx.fillText(score, 60, 50);
+        }
+
+        this.updateStatusBar();
+
+        if (fireBullet == true) {
+
+
+            if (bullets[bullets.length - 1].offsetX > 500) {
+                perfect = 0;
+            }
+
+            bullets[bulletNumber].update(100 + 50, catY);
+            bullets[bulletNumber].offsetX += bulletSpeed * 2;
+            bulletNumber++;
+
+
+            if (bulletNumber >= bullets.length) {
+                bulletNumber = 0;
+
+            }
+
+
+        }
+
+
     }
 
     this.collisionDetection = function () {
 
+        if (that.aroundCat.bottom === 0 && that.blocks.length == 0) {
+            that.ctx.clearRect(100, that.cat.positionY, 50, 50);
+            that.cat.moveDown();
+            that.cat.drawCat();
+        } else if (that.aroundCat.bottom === 0 && that.blocks.length != 0 && (that.blocks[0].aroundBlock.bottom != 1 || that.blocks[that.blocks.length - 1].posY != that.cat.positionY + 50)) {
+            that.ctx.clearRect(100, that.cat.positionY, 50, 50);
+            that.cat.moveDown();
+            that.cat.drawCat();
+        }
+
+        if (that.aroundCat.bottom === 1) {
+            perfect++;
+            if (bullets.length < numberOfBullets && perfect > 10) {
+                that.createBullet();
+                fireBullet = true;
+            }
+        }
+
+
+
         if (that.catX % 50 === 0) {
             if (this.aroundCat.right != 0) {
                 rollScreen = false;
-            }
+                that.ctx.clearRect(0, 0, 700, 200);
 
-            if (that.aroundCat.bottom === 0 && that.blocks.length == 0) {
-                that.ctx.clearRect(100, that.cat.positionY, 50, 50);
-                that.cat.moveDown();
-                that.cat.drawCat();
-            } else if (that.aroundCat.bottom === 0 && that.blocks.length != 0 && (that.blocks[0].aroundBlock.bottom != 1 || that.blocks[that.blocks.length - 1].posY != that.cat.positionY + 50)) {
-                that.ctx.clearRect(100, that.cat.positionY, 50, 50);
-                that.cat.moveDown();
-                that.cat.drawCat();
-            }
-            
-            if (that.aroundCat.bottom === 1 && that.cat.positionY<500) {
-               console.log("perfect");
-               
+                new GameOver(that.ctx).draw();
+                gameover = true;
+                startGame = false;
+
+                that.canvas.onclick = function (e) {
+                    gameover = false;
+                    startGame = true;
+
+                    that.catX = 100;
+                    catY = null;
+                    rollScreen = false;
+                    perfect = 0;
+                    bulletSpeed = 10;
+                    score = 0;
+                    startGame = true;
+                    gameover = false;
+                    bullets = [];
+                    bulletNumber = 0;
+                    fireBullet = false;
+
+
+
+
+                    that.ctx.clearRect(0, 0, width, height);
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+                    that.canvas.onclick = null;
+                    that.createCat();
+                    that.createWorld();
+                    that.welcome();
+
+                }
+
             }
 
 
@@ -122,27 +264,14 @@ function Game(height, width) {
                 //     block.drawBlock();
                 // }
 
-                if (block.aroundBlock.right == 1 || block.aroundBlock.right == 2)  {           //block collision
-                  
+                if (block.aroundBlock.right == 1 || block.aroundBlock.right == 2) {           //block collision
+
                     that.ctx.clearRect(100, block.posY, 50, 50);
                     that.blocks.splice(index, 1);
 
-                    console.log(that.blocks.length);
-                    
-
-                
-
                 }
 
-
-
             });
-
-
-
-
-
-
 
         }
 
@@ -155,6 +284,7 @@ function Game(height, width) {
         that.fpsInterval = 1000 / fps;
         that.then = Date.now();
         that.startTime = that.then;
+
 
         this.animate();
     }
@@ -193,4 +323,3 @@ function Game(height, width) {
 }
 var game = new Game(700, 600);
 game.init();
-game.startAnimating(60);

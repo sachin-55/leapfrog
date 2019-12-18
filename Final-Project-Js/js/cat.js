@@ -4,7 +4,7 @@ function Cat(height, width, context) {
     this.context = context;
     var that = this;
     this.cat = null;
-    this.positionY = 300;
+    this.positionY = 200;
     var catHeight = 50;
     this.catLimit = 450;
 
@@ -26,7 +26,7 @@ function Cat(height, width, context) {
         // if (this.positionY <= this.catLimit) {
                    
 
-            this.positionY += catHeight;
+            this.positionY += 5;
          
         // }
 
