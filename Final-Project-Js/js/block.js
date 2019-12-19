@@ -26,9 +26,9 @@ function Block(posX, posY, height, width, context) {
         return this;
     }
     this.moveDown = function () {
-        if (that.posy <= that.stackPosition) {
-            this.posY += 6;
-        }
+        // if (that.posy <= that.stackPosition) {
+            this.posY += 5;
+        // }
 
     }
 

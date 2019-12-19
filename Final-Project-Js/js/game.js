@@ -4,7 +4,6 @@ var key = null;
 
 window.addEventListener('keydown', function (e) {
     key = e.keyCode;
-    // console.log(key);
 
 });
 
@@ -192,29 +191,50 @@ function Game(height, width) {
 
 
         }
+        that.blocks.forEach(function (block, index) {
+            block.setStackPosition(that.blocks[index] * 50);
+        });
 
 
     }
 
 
     this.arrangeStack = function () {
+        if (that.blocks.length != 0) {
+            that.blocks.forEach(function (block, index) {
+                var belowblock = 0;
+                var aboveBlock = that.blocks[index].getPositionY();
+                if (index == 0) {
+                    belowblock = that.blocks[index].getPositionY();
+                } else {
 
-        that.blocks.forEach(function (block, index) {
-            if (block.aroundBlock.bottom == 0){
-                block.setStackPosition(that.blocks[index] * 50);
+                    belowblock = that.blocks[index - 1].getPositionY();
+                }
+                if (that.blocks[0].aroundBlock.bottom == 0) {
 
-                setTimeout(function () {
+                    setTimeout(function () {
 
-                    that.ctx.clearRect(100, block.posY, 50, 50);
-                    block.moveDown();
-                    block.drawBlock();
-                }, 0);
-            }
+                        that.ctx.clearRect(100, that.blocks[0].posY, 50, 50);
+                        that.blocks[0].moveDown();
+                        that.blocks[0].drawBlock();
+                    }, 0);
+                }
+
+                if (belowblock - aboveBlock > 50 && block.aroundBlock.bottom == 0) {
+                    setTimeout(function () {
+
+                        that.ctx.clearRect(100, block.posY, 50, 50);
+                        block.moveDown();
+                        block.drawBlock();
+                    }, 0);
+                }
 
 
-        });
 
 
+            });
+
+        }
     }
 
 
@@ -241,48 +261,31 @@ function Game(height, width) {
                 that.cat.moveDown();
                 that.cat.drawCat();
             }, 1);
+            console.log(" zero");
 
         }
-        else if (that.aroundCat.bottom == 0 && that.blocks.length > 0 && that.blocks[that.blocks.length - 1].posY != that.cat.getPositionY() + 50) {
-            setTimeout(function () {
-                that.ctx.clearRect(100, that.cat.positionY, 50, 50);
-                that.cat.moveDown();
-                that.cat.drawCat();
-            }, 1);
+        else if (that.blocks.length > 0 && that.blocks[that.blocks.length - 1].posY != that.cat.getPositionY() + 50 && that.aroundCat.bottom == 0) {
+            if (that.blocks[that.blocks.length - 1].getPositionY() - 50 >= that.cat.getPositionY()) {
+                setTimeout(function () {
+                    that.ctx.clearRect(100, that.cat.positionY, 50, 50);
+                    that.cat.moveDown();
+                    that.cat.drawCat();
+                }, 1);
+            }
+
+
         }
 
 
 
 
 
-
-
-        // if (that.aroundCat.bottom === 1) {   //bullet
-        //     perfect++;
-        //     if (bullets.length < numberOfBullets && perfect > 10) {
-        //         that.createBullet();
-        //         fireBullet = true;
-        //     }
-        // }
-
-
-
-        // if (that.catX % 50 === 0) {
 
 
 
 
         that.blocks.forEach(function (block, index) {
-            // if (block.aroundBlock.current == 0) {          //block stacking
-            //     setTimeout(function () {
-
-            //         that.ctx.clearRect(100, block.posY, 50, 50);
-            //         block.moveDown();
-            //         block.drawBlock();
-            //     }, 0);
-            // }
-
-
+     
 
 
             if (block.aroundBlock.current == 1 || block.aroundBlock.current == 2) {           //block collision
@@ -338,7 +341,6 @@ function Game(height, width) {
         }
 
 
-        // }
 
     }
 
