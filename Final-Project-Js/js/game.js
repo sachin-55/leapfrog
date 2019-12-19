@@ -39,7 +39,8 @@ function Game(height, width) {
     this.aroundCat = {
         'top': 0,
         'right': 0,
-        'bottom': 0
+        'bottom': 0,
+        'current': 0
 
     }
 
@@ -64,6 +65,8 @@ function Game(height, width) {
     this.createBlock = function (posX, posY) {
         var b = new Block(posX, posY, 50, 50, this.ctx);
         this.blocks.push(b.drawBlock());
+
+
     }
 
     this.createWorld = function () {
@@ -86,7 +89,8 @@ function Game(height, width) {
             that.cat.moveDown();
             that.cat.drawCat();
             that.ctx.clearRect(100, that.cat.getPositionY() - 5, 50, 50);
-            if (that.cat.getPositionY() == 500) {
+
+            if (that.world.getGridPosition(that.catX, that.cat.getPositionY() + 50).value == 1) {
                 clearInterval(start);
                 console.log("clickable");
 
@@ -134,12 +138,14 @@ function Game(height, width) {
         new StatusBar(this.ctx).update(this.catX, that.world.getWidth());
     }
 
+
     this.updatevalue = function () {
         catY = that.cat.getPositionY();
         that.catX += 5;
         this.aroundCat.top = that.world.getGridPosition(that.catX, catY - 50).value;
         this.aroundCat.right = that.world.getGridPosition(that.catX + 50, catY).value;
         this.aroundCat.bottom = that.world.getGridPosition(that.catX, catY + 50).value;
+        this.aroundCat.current = that.world.getGridPosition(that.catX, catY).value;
 
 
         that.blocks.forEach(function (block, index) {
@@ -147,10 +153,11 @@ function Game(height, width) {
             block.aroundBlock.top = that.world.getGridPosition(that.catX, block.posY - 50).value;
             block.aroundBlock.right = that.world.getGridPosition(that.catX + 50, block.posY).value;
             block.aroundBlock.bottom = that.world.getGridPosition(that.catX, block.posY + 50).value;
+            block.aroundBlock.current = that.world.getGridPosition(that.catX, block.posY).value;
 
         });
 
-        if (that.catX % 50 == 0 && that.catX > 500) {
+        if (that.catX > 500) {
             score += 10
             that.ctx.clearRect(60, 0, 100, 50);
             this.ctx.font = "35px Arial";
@@ -189,93 +196,174 @@ function Game(height, width) {
 
     }
 
-    this.collisionDetection = function () {
 
-        if (that.aroundCat.bottom === 0 && that.blocks.length == 0) {
-            that.ctx.clearRect(100, that.cat.positionY, 50, 50);
-            that.cat.moveDown();
-            that.cat.drawCat();
-        } else if (that.aroundCat.bottom === 0 && that.blocks.length != 0 && (that.blocks[0].aroundBlock.bottom != 1 || that.blocks[that.blocks.length - 1].posY != that.cat.positionY + 50)) {
-            that.ctx.clearRect(100, that.cat.positionY, 50, 50);
-            that.cat.moveDown();
-            that.cat.drawCat();
-        }
+    this.arrangeStack = function () {
 
-        if (that.aroundCat.bottom === 1) {
-            perfect++;
-            if (bullets.length < numberOfBullets && perfect > 10) {
-                that.createBullet();
-                fireBullet = true;
-            }
-        }
+        that.blocks.forEach(function (block, index) {
+            if (block.aroundBlock.bottom == 0){
+                block.setStackPosition(that.blocks[index] * 50);
 
+                setTimeout(function () {
 
-
-        if (that.catX % 50 === 0) {
-            if (this.aroundCat.right != 0) {
-                rollScreen = false;
-                that.ctx.clearRect(0, 0, 700, 200);
-
-                new GameOver(that.ctx).draw();
-                gameover = true;
-                startGame = false;
-
-                that.canvas.onclick = function (e) {
-                    gameover = false;
-                    startGame = true;
-
-                    that.catX = 100;
-                    catY = null;
-                    rollScreen = false;
-                    perfect = 0;
-                    bulletSpeed = 10;
-                    score = 0;
-                    startGame = true;
-                    gameover = false;
-                    bullets = [];
-                    bulletNumber = 0;
-                    fireBullet = false;
-
-
-
-
-                    that.ctx.clearRect(0, 0, width, height);
-                    context.clearRect(0, 0, canvas.width, canvas.height);
-                    that.canvas.onclick = null;
-                    that.createCat();
-                    that.createWorld();
-                    that.welcome();
-
-                }
-
-            }
-
-
-
-            that.blocks.forEach(function (block, index) {
-                if (that.blocks[0].aroundBlock.bottom == 0) {          //block stacking
                     that.ctx.clearRect(100, block.posY, 50, 50);
                     block.moveDown();
                     block.drawBlock();
-                }
-                // else if (index * 50 == 450 - block.posY && that.blocks.length - 1 == that.blocks.indexOf(block)) {
-                //     that.ctx.clearRect(100, block.posY, 50, 50);
-                //     block.moveDown();
-                //     block.drawBlock();
-                // }
+                }, 0);
+            }
 
-                if (block.aroundBlock.right == 1 || block.aroundBlock.right == 2) {           //block collision
 
-                    that.ctx.clearRect(100, block.posY, 50, 50);
-                    that.blocks.splice(index, 1);
+        });
 
-                }
 
-            });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    this.collisionDetection = function () {
+
+        if (that.aroundCat.bottom == 0 && that.blocks.length == 0) {
+            setTimeout(function () {
+                that.ctx.clearRect(100, that.cat.positionY, 50, 50);
+                that.cat.moveDown();
+                that.cat.drawCat();
+            }, 1);
+
+        }
+        else if (that.aroundCat.bottom == 0 && that.blocks.length > 0 && that.blocks[that.blocks.length - 1].posY != that.cat.getPositionY() + 50) {
+            setTimeout(function () {
+                that.ctx.clearRect(100, that.cat.positionY, 50, 50);
+                that.cat.moveDown();
+                that.cat.drawCat();
+            }, 1);
+        }
+
+
+
+
+
+
+
+        // if (that.aroundCat.bottom === 1) {   //bullet
+        //     perfect++;
+        //     if (bullets.length < numberOfBullets && perfect > 10) {
+        //         that.createBullet();
+        //         fireBullet = true;
+        //     }
+        // }
+
+
+
+        // if (that.catX % 50 === 0) {
+
+
+
+
+        that.blocks.forEach(function (block, index) {
+            // if (block.aroundBlock.current == 0) {          //block stacking
+            //     setTimeout(function () {
+
+            //         that.ctx.clearRect(100, block.posY, 50, 50);
+            //         block.moveDown();
+            //         block.drawBlock();
+            //     }, 0);
+            // }
+
+
+
+
+            if (block.aroundBlock.current == 1 || block.aroundBlock.current == 2) {           //block collision
+                that.ctx.clearRect(100, block.posY, 50, 50);
+                that.blocks.splice(index, 1);
+
+
+            }
+
+        });
+
+
+
+
+        if (this.aroundCat.right != 0) {  //game over condition
+            rollScreen = false;
+            that.ctx.clearRect(0, 0, 700, 200);
+
+            new GameOver(that.ctx).draw();
+            gameover = true;
+            startGame = false;
+
+            that.canvas.onclick = function (e) {
+                gameover = false;
+                startGame = true;
+
+                that.blocks = [];
+
+                that.catX = 100;
+                catY = null;
+                rollScreen = false;
+                perfect = 0;
+                bulletSpeed = 10;
+                score = 0;
+                startGame = true;
+                gameover = false;
+                bullets = [];
+                bulletNumber = 0;
+                fireBullet = false;
+
+
+
+
+                that.ctx.clearRect(0, 0, width, height);
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                that.canvas.onclick = null;
+                that.createCat();
+                that.createWorld();
+                that.welcome();
+
+            }
 
         }
 
+
+        // }
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -309,6 +397,7 @@ function Game(height, width) {
             that.world.moveWorld();
             that.updatevalue();
             that.collisionDetection();
+            that.arrangeStack();
 
             if (key === 32) {
 

@@ -23,12 +23,10 @@ function Cat(height, width, context) {
     }
     this.moveDown = function () {
 
-        // if (this.positionY <= this.catLimit) {
                    
 
             this.positionY += 5;
          
-        // }
 
     }
     this.getPositionY = function () {

@@ -6,17 +6,19 @@ function Block(posX, posY, height, width, context) {
     this.context = context;
     var that = this;
     this.block = null;
-    this.blockLimit = 450;
+    this.stackPosition = 0;
     this.aroundBlock = {
         'top': 0,
         'right': 0,
-        'bottom': 0
+        'bottom': 0,
+        'current': 0
 
     }
 
     this.drawBlock = function () {
         this.block = new Image();
         this.block.src = "images/cat-egg50.png"
+
         this.block.onload = function () {
             that.context.drawImage(that.block, that.posX, that.posY, 50, 50);
 
@@ -24,16 +26,18 @@ function Block(posX, posY, height, width, context) {
         return this;
     }
     this.moveDown = function () {
-
-            this.posY += height;
-           
-
+        if (that.posy <= that.stackPosition) {
+            this.posY += 6;
+        }
 
     }
 
+    this.setStackPosition = function (sPos) {
+        that.stackPosition = sPos;
+    }
 
     this.getPositionY = function () {
-        return this.posY;
+        return that.posY;
     }
 
 
