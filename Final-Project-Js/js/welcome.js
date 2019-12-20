@@ -11,9 +11,9 @@ this.context=ctx;
         }
 
          var gamePlay = new Image();
-        gamePlay.src = 'images/play.png';
+        gamePlay.src = 'images/play2.png';
         gamePlay.onload = function(){
-            that.context.drawImage(gamePlay,140,600,300,30);
+            that.context.drawImage(gamePlay,140,600,300,100);
         }
 
      

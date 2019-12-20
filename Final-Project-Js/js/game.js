@@ -1,11 +1,8 @@
-
-
 var key = null;
-
 window.addEventListener('keydown', function (e) {
     key = e.keyCode;
-
 });
+
 
 function Game(height, width) {
     this.height = height;
@@ -26,16 +23,22 @@ function Game(height, width) {
     var catY = null;
     var that = this;
     var rollScreen = false;
-    var perfect = 0;
-    var bulletSpeed = 10;
+
     var score = 0;
     var startGame = true;
     var gameover = false;
+
+    var perfect = 0;
+    var bulletSpeed = 10;
     var bullets = [];
-    var numberOfBullets = 20;
-    var bulletNumber = 0;
-    var fireBullet = false;
+
+    var fireDuration = 2000;
+    var fireTimeRemaining = fireDuration;
+
+    var gameLevel = 1;
+
     this.aroundCat = {
+
         'top': 0,
         'right': 0,
         'bottom': 0,
@@ -68,8 +71,8 @@ function Game(height, width) {
 
     }
 
-    this.createWorld = function () {
-        this.world = new World();
+    this.createWorld = function (level) {
+        this.world = new World(level);
         this.world.drawGrid();
     }
 
@@ -87,33 +90,67 @@ function Game(height, width) {
         var start = setInterval(function () {
             that.cat.moveDown();
             that.cat.drawCat();
-            that.ctx.clearRect(100, that.cat.getPositionY() - 5, 50, 50);
+            that.ctx.clearRect(100, that.cat.getPositionY() - that.cat.speed, 50, 50);
 
             if (that.world.getGridPosition(that.catX, that.cat.getPositionY() + 50).value == 1) {
                 clearInterval(start);
                 console.log("clickable");
+                that.ctx.fillStyle = "black";
+                that.ctx.rect(that.width / 2 - 250, that.height / 2 - 60, 100, 50);
+                that.ctx.stroke();
+                that.ctx.font = "30px Arial";
+                that.ctx.fillText('Map 1', that.width / 2 - 245, that.height / 2 - 25);
 
+                that.ctx.rect(that.width / 2 - 250, that.height / 2, 100, 50);
+                that.ctx.stroke();
+                that.ctx.font = "30px Arial";
+                that.ctx.fillText('Map 2', that.width / 2 - 245, that.height / 2 + 35);
 
                 that.canvas.onclick = function (e) {
                     var mouse = {
-                        'x': window.innerWidth - (window.innerWidth),
+                        'x': e.x,
                         'y': e.y
                     }
 
-                    var img = new Image();
-                    img.src = 'images/paws.png';
-                    img.onload = function () {
-                        that.ctx.drawImage(img, 10, 12, 50, 50);
-                    }
-                    that.ctx.clearRect(0, 0, that.width, that.height);
-                    that.cat.drawCat();
-                    rollScreen = true;
 
-                    if (startGame == true && gameover == false) {
-                        that.canvas.onclick = null;
-                        game.startAnimating(600);
+                    if (mouse.x > window.innerWidth / 2 - 250 && mouse.x < window.innerWidth / 2 - 150 && mouse.y > window.innerHeight / 2 - 60 && mouse.y < window.innerHeight / 2 - 10) {
+                        console.log('clicked 1');
+                        gameLevel = 1;
+                        that.createWorld(gameLevel);
+
 
                     }
+                    if (mouse.x > window.innerWidth / 2 - 250 && mouse.x < window.innerWidth / 2 - 150 && mouse.y > window.innerHeight / 2 && mouse.y < window.innerHeight / 2 + 50) {
+                        console.log('clicked 2');
+                        gameLevel = 2;
+                        that.createWorld(gameLevel);
+
+
+                    }
+
+
+
+
+
+
+                    if (mouse.x > window.innerWidth / 2 - 150 && mouse.x < window.innerWidth / 2 + 150 && mouse.y > window.innerHeight / 2 + 200) {
+
+                        var img = new Image();
+                        img.src = 'images/paws.png';
+                        img.onload = function () {
+                            that.ctx.drawImage(img, 10, 12, 50, 50);
+                        }
+                        that.ctx.clearRect(0, 0, that.width, that.height);
+                        that.cat.drawCat();
+                        rollScreen = true;
+
+                        if (startGame == true && gameover == false) {
+                            that.canvas.onclick = null;
+                            game.startAnimating(600);
+
+                        }
+                    }
+
                 }
 
 
@@ -127,7 +164,7 @@ function Game(height, width) {
     this.init = function () {
         that.createCanvas();
         that.createCat();
-        that.createWorld();
+        that.createWorld(gameLevel);
         that.welcome();
 
 
@@ -172,25 +209,25 @@ function Game(height, width) {
 
         this.updateStatusBar();
 
-        if (fireBullet == true) {
+        // if (fireBullet == true) {
 
 
-            if (bullets[bullets.length - 1].offsetX > 500) {
-                perfect = 0;
-            }
+        //     if (bullets[bullets.length - 1].offsetX > 500) {
+        //         perfect = 0;
+        //     }
 
-            bullets[bulletNumber].update(100 + 50, catY);
-            bullets[bulletNumber].offsetX += bulletSpeed * 2;
-            bulletNumber++;
-
-
-            if (bulletNumber >= bullets.length) {
-                bulletNumber = 0;
-
-            }
+        //     bullets[bulletNumber].update(100 + 50, catY);
+        //     bullets[bulletNumber].offsetX += bulletSpeed * 2;
+        //     bulletNumber++;
 
 
-        }
+        //     if (bulletNumber >= bullets.length) {
+        //         bulletNumber = 0;
+
+        //     }
+
+
+        // }
         that.blocks.forEach(function (block, index) {
             block.setStackPosition(that.blocks[index] * 50);
         });
@@ -217,7 +254,7 @@ function Game(height, width) {
                         that.ctx.clearRect(100, that.blocks[0].posY, 50, 50);
                         that.blocks[0].moveDown();
                         that.blocks[0].drawBlock();
-                    }, 0);
+                    }, 1);
                 }
 
                 if (belowblock - aboveBlock > 50 && block.aroundBlock.bottom == 0) {
@@ -226,7 +263,7 @@ function Game(height, width) {
                         that.ctx.clearRect(100, block.posY, 50, 50);
                         block.moveDown();
                         block.drawBlock();
-                    }, 0);
+                    }, 1);
                 }
 
 
@@ -238,22 +275,51 @@ function Game(height, width) {
     }
 
 
+    this.perfectCount = function () {
+        if (that.world.getGridPosition(that.catX + 50, catY + 50).value == 1 && that.aroundCat.bottom == 0 && catY < 500) {
+            perfect++;
+            if (perfect / 10 == 3) {
+                console.log("Perfect = fire");
+                that.fireBullet();
+
+            }
+
+        }
 
 
+    }
+
+    this.fireBullet = function () {
+
+        var bulletFired = setInterval(function () {
+            bullets.push(new Bullet(that.ctx, 100 + 50, that.cat.getPositionY(), 5, 30));
+
+            bullets.forEach(function (b) {
+                b.update();
+            });
 
 
+            fireTimeRemaining -= 100;
+            if (fireTimeRemaining <= 0) {
+                clearInterval(bulletFired);
+                perfect = 0;
+                fireTimeRemaining = fireDuration;
+                bullets.forEach(function (b, i) {
+                    console.log(bullets.length);
+                    bullets.splice(i, 1)
+                    that.ctx.clearRect(b.x - 5, b.y - 5 + 20, 10, 10);
+                });
+            }
+        }, 100);
+    }
 
+    this.moveBullet = function () {
 
-
-
-
-
-
-
-
+    }
 
 
     this.collisionDetection = function () {
+        console.log(catY);
 
         if (that.aroundCat.bottom == 0 && that.blocks.length == 0) {
             setTimeout(function () {
@@ -261,7 +327,6 @@ function Game(height, width) {
                 that.cat.moveDown();
                 that.cat.drawCat();
             }, 1);
-            console.log(" zero");
 
         }
         else if (that.blocks.length > 0 && that.blocks[that.blocks.length - 1].posY != that.cat.getPositionY() + 50 && that.aroundCat.bottom == 0) {
@@ -285,7 +350,7 @@ function Game(height, width) {
 
 
         that.blocks.forEach(function (block, index) {
-     
+
 
 
             if (block.aroundBlock.current == 1 || block.aroundBlock.current == 2) {           //block collision
@@ -300,42 +365,55 @@ function Game(height, width) {
 
 
 
-        if (this.aroundCat.right != 0) {  //game over condition
+        if (this.aroundCat.right!= 0  ) {  //game over condition
             rollScreen = false;
             that.ctx.clearRect(0, 0, 700, 200);
 
             new GameOver(that.ctx).draw();
+            this.ctx.clearRect(300, 300, 100, 100);
+            that.ctx.font = "40px Arial";
+            that.ctx.strokeStyle = "black";
+            that.ctx.lineWidth = 2;
+            that.ctx.strokeText(score, 300, 360);
+            that.ctx.fillStyle = "white";
+            that.ctx.fillText(score, 300, 360);
             gameover = true;
             startGame = false;
 
             that.canvas.onclick = function (e) {
-                gameover = false;
-                startGame = true;
+                var mouse = {
+                    'x': e.x,
+                    'y': e.y
+                }
+                if (mouse.x > window.innerWidth / 2 - 150 && mouse.x < window.innerWidth / 2 + 150 && mouse.y > window.innerHeight / 2 + 200) {
 
-                that.blocks = [];
+                    gameover = false;
+                    startGame = true;
 
-                that.catX = 100;
-                catY = null;
-                rollScreen = false;
-                perfect = 0;
-                bulletSpeed = 10;
-                score = 0;
-                startGame = true;
-                gameover = false;
-                bullets = [];
-                bulletNumber = 0;
-                fireBullet = false;
+                    that.blocks = [];
+
+                    that.catX = 100;
+                    catY = null;
+                    rollScreen = false;
+                    perfect = 0;
+                    bulletSpeed = 10;
+                    score = 0;
+                    startGame = true;
+                    gameover = false;
+                    bullets = [];
+                    bulletNumber = 0;
+                    fireBullet = false;
 
 
 
 
-                that.ctx.clearRect(0, 0, width, height);
-                context.clearRect(0, 0, canvas.width, canvas.height);
-                that.canvas.onclick = null;
-                that.createCat();
-                that.createWorld();
-                that.welcome();
-
+                    that.ctx.clearRect(0, 0, width, height);
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+                    that.canvas.onclick = null;
+                    that.createCat();
+                    that.createWorld(gameLevel);
+                    that.welcome();
+                }
             }
 
         }
@@ -343,32 +421,6 @@ function Game(height, width) {
 
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     this.startAnimating = function (fps) {
         that.fpsInterval = 1000 / fps;
@@ -400,6 +452,7 @@ function Game(height, width) {
             that.updatevalue();
             that.collisionDetection();
             that.arrangeStack();
+            // that.perfectCount();
 
             if (key === 32) {
 

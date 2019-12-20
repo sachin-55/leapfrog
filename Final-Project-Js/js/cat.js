@@ -7,7 +7,7 @@ function Cat(height, width, context) {
     this.positionY = 200;
     var catHeight = 50;
     this.catLimit = 450;
-
+this.speed=5;
     this.drawCat = function () {
         this.cat = new Image();
         this.cat.src = "images/Cat50.png";
@@ -18,14 +18,14 @@ function Cat(height, width, context) {
     }
     this.moveUp = function () {
 
-        this.positionY -= catHeight;
+        this.positionY -= 50;
       
     }
     this.moveDown = function () {
 
                    
 
-            this.positionY += 5;
+            this.positionY += this.speed;
          
 
     }
